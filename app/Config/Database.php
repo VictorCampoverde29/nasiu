@@ -26,10 +26,10 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
-        'username'     => '',
-        'password'     => '',
-        'database'     => '',
+        'hostname'     => 'grupoasiu.com',
+        'username'     => 'ollaavjq_sistemas',
+        'password'     => 'canelita24.',
+        'database'     => 'ollaavjq_chinalmacen',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
