@@ -6,22 +6,28 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
-$routes->get('/login', 'LoginController::index');
-$routes->get('/empresa','EmpresaController::index');
+
+
 
 
 $routes->post('/conversor','Home::conversor');
-$routes->get('/prueba','EmpresaController::ver_empresas_activas');
+//DASHBOARD
+$routes->group('',['filter'=>'AuthFilter'],function($routes){
+    $routes->get('/','Home::index');
+    $routes->get('dashboard','Home::index');
+    $routes->get('bpadres','BarrasPerfilController::ObtenerBarrasPerfilPadres');
+   
+});
 
-
+// LOGIN
 $routes->group('login',function($routes){
+    $routes->get('/', 'LoginController::index');
     $routes->get('sucactivas','SucursalController::get_sucursal_activas');
     $routes->get('almcactivos','AlmacenController::get_almacenes_x_suc');
+    $routes->post('login','LoginController::logueo_ingreso');
+    $routes->get('logout', 'LoginController::salir');
+    $routes->get('unauthorized', 'LoginController::unauthorized');
 });
 
 
-$routes->group('',['filter'=>'AuthFilter'],function($routes){
 
-    $routes->get('/usuario','UsuarioController::index');
-});

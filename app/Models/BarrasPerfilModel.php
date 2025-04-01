@@ -17,14 +17,14 @@ class BarrasPerfilModel extends Model
 
     public function geturlsxperfil($perfil)
     {
-        return $this->where('idperfil',$perfil)
+        return $this->where('perfil',$perfil)
                     ->where('acceso','SI')
                     ->whereNotIn('padre',[0])
                     ->findAll();
     }
     public function geturlsxperfil_aside($perfil)
     {
-        return $this->where('idperfil',$perfil)
+        return $this->where('perfil',$perfil)
                     ->where('acceso','SI')
                     ->findAll();
     }

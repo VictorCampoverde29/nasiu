@@ -33,9 +33,9 @@ class AuthFilter implements FilterInterface
 
         $uri = service('uri');
         $routePath = implode('/', $uri->getSegments());
-       // echo $routePath; 
+        log_message('error','variable routepath:'.$routePath); 
 
-        $perfil = session()->get('idperfil');
+        $perfil = session()->get('perfil');
         $barrasperfil=new BarrasPerfilModel();
         $urls = $barrasperfil->geturlsxperfil($perfil); 
      
@@ -45,7 +45,7 @@ class AuthFilter implements FilterInterface
         });
 
      
-        if ($routePath !== 'dashboard') {
+        if ($routePath !== 'dashboard' && $routePath!=='') {
 
             if (empty($matchingItems)) {
                     return redirect()->to('login/unauthorized');
