@@ -21,8 +21,10 @@ class UsuariosModel extends Model
     public function getUser($usuario, $clave)
     {
         // Obtener el usuario desde la base de datos
-        $user = $this->where('idusuarios', $usuario)
-                     ->where('estado', 'ACTIVO')
+        $user = $this->select('usuarios.idusuarios,usuarios.password_usu,usuarios.usuario,usuarios.perfil,per.nombre')
+                     ->join('personal per','usuarios.idpersonal=per.idpersonal')
+                     ->where('idusuarios', $usuario)
+                     ->where('usuarios.estado', 'ACTIVO')
                      ->first();        
     
         // Verificar si el usuario fue encontrado

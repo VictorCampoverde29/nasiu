@@ -16,4 +16,6 @@ class EmpresaModel extends Model
                     ->orderBy('descripcion','ASC')
                     ->findAll();
     }
+
+
 }

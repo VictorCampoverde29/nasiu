@@ -8,8 +8,8 @@ class AlmacenController extends Controller
     public function get_almacenes_x_suc()
     {
         $almacenMdl=new AlmacenModel();
-        $codsucursal=$this->request->getGet('cod');
+        $codsucursal=$this->request->getPost('cod');
         $data =$almacenMdl->get_almacenes_x_suc($codsucursal);
-        return $this->response->setJSON([$data]);
+        return $this->response->setJSON(['almacenes'=>$data]);
     }
 }

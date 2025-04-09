@@ -11,8 +11,8 @@ class SucursalController extends Controller
     public function get_sucursal_activas()
     {
         $sucModel=new SucursalModel();
-        $codEmpresa=$this->request->getGet('cod');
+        $codEmpresa=$this->request->getPost('cod');
         $data=$sucModel->get_sucursal_activas($codEmpresa);
-        return $this->response->setJSON([$data]);
+        return $this->response->setJSON(['sucursales'=>$data]);
     }
 }

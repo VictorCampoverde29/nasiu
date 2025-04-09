@@ -48,7 +48,7 @@ function loguear() {
         data: parametros,
         dataType: "json",
         success: function(response) {
-            console.log(response);
+           
             if (response.mensaje) {
                 Swal.fire({
                     icon: "error",

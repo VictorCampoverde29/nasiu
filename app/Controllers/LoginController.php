@@ -1,8 +1,10 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\AlmacenModel;
 use App\Models\BarrasPerfilModel;
 use App\Models\EmpresaModel;
+use App\Models\SucursalModel;
 use CodeIgniter\Controller;
 use App\Models\UsuariosModel;
 
@@ -52,7 +54,7 @@ class LoginController extends Controller
           $barrasperfilModel=new BarrasPerfilModel();
           // Verifica el usuario y la contraseña
           $userData = $usuarioModel->getUser($usuario, $clave); // Implementa este método en tu modelo
-          log_message('info', 'Datos recibidos: ' . json_encode($userData));
+          //log_message('error', 'Datos recibidos: ' . json_encode($userData));
 
           if ($userData) {
               // Si se encontró el usuario, verifica el acceso
@@ -60,8 +62,10 @@ class LoginController extends Controller
               
                       // Almacena en sesión los datos necesarios
                       session()->set([
+                          'nombrepersonal' => $userData['nombre'],
                           'nombreusuariocorto' => $userData['usuario'],          
                           'usuario' => $userData['idusuarios'],
+                          'perfil'=>$userData['perfil'],
                           'password' => $clave,                          
                           'urls'=>$url_x_perfil,                    
                           'is_logged'=>true
@@ -85,5 +89,53 @@ class LoginController extends Controller
       } catch (\Exception $e) {
           return json_encode(['error' => ['text' => $e->getMessage()]]);
       }
+    }
+    public function cambio_almacen()
+    {
+    
+      $session = session();
+        
+        if ($session->get('usuario')) {
+            $idsucursal = $this->request->getPost('cmbsucursal');
+            $idalmacen = $this->request->getPost('cmbalmacen');
+
+            $session->set('codsucursal', $idsucursal);
+            $session->set('codigoalmacen', $idalmacen);
+
+            $almacenModel = new AlmacenModel();
+            $sucursalModel=new SucursalModel();
+
+            // Obtener información del almacén
+            $data_almacen = $almacenModel->getAlmacen($idalmacen);           
+            $nombalmacen =  $data_almacen['descripcion'];
+            
+            // Obtener información de la sucursal y empresa
+            $data = $sucursalModel->getSucursal($idsucursal);
+            log_message('error','Data:'.print_r($data,true));
+       
+            if ($data) {
+              $session->set([
+                  'n_sucursal' => $data['suc_descripcion'],   
+                  'direccion_suc'=>  $data['direccion_suc'],                
+                  'n_empresa' => $data['descripcion_emp'],  
+                  'nombrealmacen' => $nombalmacen,
+                  'dirempresa' => $data['direccion_emp'],  
+                  'rucempresa' => $data['ruc'],  
+                  'codempresa' => $data['idempresa'],  
+                  'modofe' => $data['modo_ft_notas'],  
+                  'modoguias' => $data['modo_guias'],  
+                  'usol' => $data['usuario_sol'],  
+                  'clavesol' => $data['clavesol'],  
+                  'clientid' => $data['clientid'],  
+                  'passid' => $data['passid'],  
+                  'est_anexo'=> $data['est_anexo']
+              ]);
+          }
+
+
+            return redirect()->back(); // Redirige a la página anterior
+        } else {
+            return redirect()->to('login');
+        }
     }
 }

@@ -15,4 +15,10 @@ class AlmacenModel extends Model
                     ->orderBy('descripcion','ASC')
                     ->findAll();
     }
+
+    public function getAlmacen($codalmacen)
+    {
+        return $this->where('idalmacen',$codalmacen)
+                    ->first();
+    }
 }
