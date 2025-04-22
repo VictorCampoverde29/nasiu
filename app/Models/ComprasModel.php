@@ -27,4 +27,14 @@ class ComprasModel extends Model
         return (float)($montomes);
     }
 
+    public function getTotalComprasRegistradas($codAlmacen)
+    {
+        return $this->select("IFNULL(SUM(IF(iddocumento=7, imp_total * -1, imp_total)), 0) as tot_compras", false)
+                   ->where('estado', 'REGISTRADA')
+                   ->where('MONTH(fecha_emision)', 'MONTH(NOW())', false)
+                   ->where('YEAR(fecha_emision)', 'YEAR(NOW())', false)
+                   ->where('idalmacen', $codAlmacen)
+                   ->get()
+                   ->getRow()->tot_compras ?? 0;
+    }
 }

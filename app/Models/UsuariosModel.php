@@ -8,7 +8,7 @@ class UsuariosModel extends Model
 {
     protected $table      = 'usuarios';
     protected $primaryKey = 'idusuarios';
-    protected $allowedFields = ['usuario','clave','estado','perfil'];  
+    protected $allowedFields = ['usuario','clave','estado','perfil','password_usu'];  
 
     public function usuarios_activos()
     {
@@ -16,6 +16,14 @@ class UsuariosModel extends Model
                     ->where('estado','ACTIVO')
                     ->orderBy('usuario','ASC')
                     ->findAll();
+    }
+    public function getUserData($usuario)
+    {
+        // Obtener el usuario desde la base de datos
+        $user = $this->where('idusuarios', $usuario)
+                     ->where('estado', 'ACTIVO')
+                     ->first();        
+        return $user; 
     }
 
     public function getUser($usuario, $clave)

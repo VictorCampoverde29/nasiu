@@ -18,6 +18,12 @@ $routes->group('',['filter'=>'AuthFilter'],function($routes){
     $routes->get('bpadres','BarrasPerfilController::ObtenerBarrasPerfilPadres');
    
 });
+//RUTAS DE BASE DE DATOS
+$routes->group('dashboard',['filter'=>'AuthFilter'],function($routes){
+    $routes->get('unidades','UnidadesController::index');
+    $routes->get('imp_cert','CertificadosController::imp_cert');
+});
+
 
 // LOGIN
 $routes->group('login',function($routes){
@@ -27,14 +33,43 @@ $routes->group('login',function($routes){
     $routes->get('unauthorized', 'LoginController::unauthorized');
 });
 
-//CAMBIO DE ALMACEN
+
 $routes->group('acceso',['filter'=>'CambioFilter'],function($routes){
+    /*CAMBIO DE ALMACEN */ 
     $routes->get('empresa','AccesoController::get_empresas_acceso');
-    $routes->post('sucactivas','SucursalController::get_sucursal_activas');
+    $routes->post('sucursales','AccesoController::get_sucursal_acceso');
     $routes->post('almcactivos','AlmacenController::get_almacenes_x_suc');
     $routes->post('cambioalmacen','LoginController::cambio_almacen');
-    
+    $routes->post('clave','UsuarioController::changePassword');
 });
 
+
+$routes->group('usuario',['filter'=>'CambioFilter'],function($routes){
+    $routes->post('buscarxid','UsuariosController::buscarxid');
+    $routes->post('update','UsuariosController::update');  
+    $routes->post('registrar','UsuariosController::insertar'); 
+    //MODIFICACION DESDE DASHBOARD
+    $routes->post('cambiopass','UsuarioController::changePasswordUsuario'); 
+});
+
+$routes->group('unidades',['filter'=>'CambioFilter'],function($routes){
+    $routes->get('datatable','UnidadesController::getall');
+    $routes->post('insertar','UnidadesController::insertar');
+    $routes->post('buscarxid','UnidadesController::buscarxid');
+    $routes->post('update','UnidadesController::update');  
+});
+
+$routes->group('documentacion',['filter'=>'CambioFilter'],function($routes){
+    $routes->post('insertar','DocumentacionController::insertar');
+    $routes->post('datatable','DocumentacionController::get_all_x_unidades');  
+    $routes->post('actualizar','DocumentacionController::update');
+    $routes->get('vencidos','DocumentacionController::get_all_vencidos');
+});
+
+
+//API CONSULTAS
+$routes->group('api',['filter'=>'CambioFilter'],function($routes){
+    $routes->post('unidades','ApiController::ConsultarPLaca');
+});
 
 

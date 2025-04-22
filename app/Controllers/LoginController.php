@@ -34,7 +34,8 @@ class LoginController extends Controller
     }
 
     public function unauthorized(){
-      return view('login/unauthorized.php');
+      $data['version']= env('VERSION');
+      return view('login/unauthorized.php',$data);
     }
     public function salir(){
       $session=session();
@@ -96,8 +97,8 @@ class LoginController extends Controller
       $session = session();
         
         if ($session->get('usuario')) {
-            $idsucursal = $this->request->getPost('cmbsucursal');
-            $idalmacen = $this->request->getPost('cmbalmacen');
+            $idsucursal = $this->request->getPost('sucursal');
+            $idalmacen = $this->request->getPost('almacen');
 
             $session->set('codsucursal', $idsucursal);
             $session->set('codigoalmacen', $idalmacen);
@@ -133,7 +134,8 @@ class LoginController extends Controller
           }
 
 
-            return redirect()->back(); // Redirige a la página anterior
+            return $this->response->setJSON([
+                'success' => true ,'mensaje'=>'Almacén cambiado correctamente'        ]);
         } else {
             return redirect()->to('login');
         }

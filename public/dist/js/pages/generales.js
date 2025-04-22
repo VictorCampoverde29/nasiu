@@ -36,6 +36,50 @@ var Español={
                     "colvis": "Visibilidad"
                 }
 }
+function cambio_almacen() {
+  var empresa=$('#cmbempresa').val();
+  var sucursal=$('#cmbsucursal').val(); 
+  var almacen=$('#cmbalmacen').val();
+
+  if (empresa==="") {
+    Swal.fire({
+      icon: "error",
+      title: "CAMBIO DE ALMACEN",
+      text: "Seleccione una empresa"
+    });
+    return;   
+  }
+  if (sucursal==="") {
+    Swal.fire({
+      icon: "error",
+      title: "CAMBIO DE ALMACEN",
+      text: "Seleccione una sucursal"
+    });
+    return;   
+  }
+  if (almacen==="") {
+    Swal.fire({
+      icon: "error",
+      title: "CAMBIO DE ALMACEN",
+      text: "Seleccione un almacen"
+    });
+    return;  
+ }
+
+  var url=baseURL+'acceso/cambioalmacen';
+    $.ajax({
+      type: "post",
+      url: url,
+      data: {"sucursal":sucursal,
+            "almacen":almacen},
+      success: function (response) {
+        console.log(response);
+        if (response.success) {
+            location.reload();
+        }
+      }
+    });
+}
 function llenarempresa() {
   var url=baseURL+ 'acceso/empresa';
 
@@ -64,7 +108,7 @@ function llenarempresa() {
     });
 }
 function llenarSucursal(cod) {
-  var url=baseURL+'acceso/sucactivas';
+  var url=baseURL+'acceso/sucursales';
     $.ajax({
       type: "POST",
       url: url,
@@ -118,19 +162,22 @@ function llenarAlmacen(cod) {
 }
 function actualizar_password() {
   var nuevaClave=$('#txtclave').val();
-  const url=baseURL+'cambio/clave';
+  const url=baseURL+'acceso/clave';
   $.ajax({
     type: "post",
     url: url,
     data:{np: nuevaClave},
     success: function(response) {
-      console.log(response);
+
       if (response.success) {
         Swal.fire({
           icon: "success",
           title: "CAMBIO DE CLAVE",
           text: response.mensaje
-        });
+        }).then(function() {
+          $('#txtclave').val('');
+          $('#modal-clave').modal('hide');
+        });  
       } else {
         Swal.fire({
           icon: "error",

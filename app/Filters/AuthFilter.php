@@ -41,7 +41,7 @@ class AuthFilter implements FilterInterface
      
        
         $matchingItems = array_filter($urls, function ($menuItem) use ($routePath) {
-            return $menuItem['ruta'] == $routePath;
+            return $menuItem['ruta_ci'] == $routePath;
         });
 
      

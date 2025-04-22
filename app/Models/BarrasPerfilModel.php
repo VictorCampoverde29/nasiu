@@ -7,7 +7,7 @@ class BarrasPerfilModel extends Model
 {
     protected $table      = 'barras_perfil';
     protected $primaryKey = 'idbarras_perfil';
-    protected $allowedFields = ['idbarras_perfil','descripcion', 'padre', 'ruta', 'logo', 'acceso', 'idperfil'];
+    protected $allowedFields = ['idbarras_perfil','descripcion', 'padre', 'ruta','ruta_ci', 'logo', 'acceso', 'idperfil'];
 
     public function getbarraperfilxperfil_padre($perfil){
         return $this->where('idperfil',$perfil)

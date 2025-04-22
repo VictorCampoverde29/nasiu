@@ -1,6 +1,6 @@
 <aside class="main-sidebar elevation-4 sidebar-no-expand sidebar-light-primary">
     <!-- Brand Logo -->
-    <a href="dashboard" class="brand-link text-center d-block">
+    <a href="<?=base_url() ?>" class="brand-link text-center d-block">
       <img src="<?= base_url('public/dist/img/logo/logogasiu.png') ?>" alt="AdminLTE Logo" width="120" >
 
     </a>
@@ -18,44 +18,37 @@
           
       </div>
 
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div>
+      
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <?php 
-                    $urls=session()->get('urls');
-                    foreach ($urls as $url) {
-                        if ($url['padre'] == 0 & $url['tipo']!=='GT') {
-                            echo '<li class="nav-item">'.
-                                    '<a href="#" class="nav-link">'.
-                                        '<i class="'.$url['logo'].'"></i>'.
-                                        ' <p>'.$url['descripcion'].'<i class="right fas fa-angle-left"></i></p>'.
-                                    '</a>'.
-                                    '<ul class="nav nav-treeview">';
-                                    foreach ($urls as $childUrl) {                                        
-                                        if ($childUrl['padre'] == $url['idbarras_perfil']) { // Asegúrate de que 'id' es el identificador correcto
-                                            echo '<li class="nav-item"> 
-                                                    <a href="'.base_url($childUrl['ruta']).'" class="nav-link">
-                                                        <i class="nav-icon fas fa-circle-dot"></i>
-                                                        <p>'.$childUrl['descripcion'].'</p>'.
-                                                    '</a> </li>';
-                                        }
-                                    }
-                            echo '</ul></li>';        
-                        }
+$urls = session()->get('urls') ?? [];
+helper('url');
+
+foreach ($urls as $url) {
+    if ($url['padre'] == 0 && $url['tipo'] !== 'GT') {
+        echo '<li class="nav-item">'.
+                '<a href="#" class="nav-link">'.
+                    '<i class="'.$url['logo'].'"></i>'.
+                    ' <p>'.$url['descripcion'].'<i class="right fas fa-angle-left"></i></p>'.
+                '</a>'.
+                '<ul class="nav nav-treeview">';
+                foreach ($urls as $childUrl) {                                        
+                    if ($childUrl['padre'] == $url['idbarras_perfil']) {
+                        $link = !empty($childUrl['ruta_ci']) ? base_url($childUrl['ruta_ci']) : '#';
+                        echo '<li class="nav-item"> 
+                                <a href="'.$link.'" class="nav-link">
+                                    <i class="nav-icon fas fa-circle-dot"></i>
+                                    <p>'.$childUrl['descripcion'].'</p>'.
+                                '</a> </li>';
                     }
-                ?>
+                }
+        echo '</ul></li>';        
+    }
+}
+?>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

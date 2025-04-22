@@ -12,7 +12,7 @@
       <!-- Navbar Search -->
   
       <li class="nav-item">
-        <button type="button" class="btn btn-primary btn-block" title="CAMBIAR CLAVE"><i class="fa fa-user-lock"></i></button>
+        <button type="button" class="btn btn-primary btn-block" title="CAMBIAR CLAVE" data-toggle="modal" data-target="#modal-clave"><i class="fa fa-user-lock"></i></button>
       </li>
       <li class="nav-item">
       &nbsp;
@@ -24,7 +24,7 @@
       &nbsp;
       </li>
       <li class="nav-item">
-       <a  class="btn btn-danger btn-block" title="SALIR" href="login/logout"><i class="fa fa-right-from-bracket"></i></a>
+       <a  class="btn btn-danger btn-block" title="SALIR" href="<?=base_url('login/logout');?>"><i class="fa fa-right-from-bracket"></i></a>
       </li>
      
     </ul>

@@ -24,9 +24,22 @@ class AccesoModel extends Model
                     ->findAll();
     }
 
+    public function get_sucursal_acceso($usuario,$empresa){
+       
+        return $this->distinct()
+                    ->select('suc.idsucursal,suc.descripcion')
+                    ->join('sucursal suc','acc.idsucursal=suc.idsucursal')                  
+                    ->where('acceso','SI')
+                    ->where('suc.estado','ACTIVO')
+                    ->where('suc.idempresa',$empresa)
+                    ->where('acc.idusuarios',$usuario)
+                    ->orderby('suc.descripcion','ASC')
+                    ->findAll();
+    }
+
     public function get_datos_compras_ventas($tipo,$codalma)
     {
-        $sql = 'CALL VER_ARTICULOS_KARDEX_GENERAL(?, ?)';
+        $sql = 'CALL SP_VER_COMPRAS_O_VENTAS(?, ?)';
         $query = $this->db->query($sql, [
             
             $codalma,
