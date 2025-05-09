@@ -2,8 +2,7 @@ $(document).ready(function() {
     llenarempresa();
    $('#cmbempresa').change(function (e) { 
         llenarSucursal($(this).val());    
-   });
-   
+   });   
    $('#cmbsucursal').change(function (e) { 
     llenarAlmacen($(this).val());    
    });

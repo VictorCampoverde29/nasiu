@@ -8,8 +8,6 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 
-
-
 $routes->post('/conversor','Home::conversor');
 //DASHBOARD
 $routes->group('',['filter'=>'AuthFilter'],function($routes){
@@ -22,6 +20,7 @@ $routes->group('',['filter'=>'AuthFilter'],function($routes){
 $routes->group('dashboard',['filter'=>'AuthFilter'],function($routes){
     $routes->get('unidades','UnidadesController::index');
     $routes->get('imp_cert','CertificadosController::imp_cert');
+    $routes->get('ing_cert','CertificadosController::ing_cert');
 });
 
 
@@ -43,6 +42,13 @@ $routes->group('acceso',['filter'=>'CambioFilter'],function($routes){
     $routes->post('clave','UsuarioController::changePassword');
 });
 
+$routes->group('certificados',['filter'=>'CambioFilter'],function($routes){
+    $routes->post('datatable','CertificadosController::getCertificados');
+    $routes->get('rptCertificado/(:num)','CertificadosController::generar_certificado/$1');
+    $routes->post('rptCertificados','CertificadosController::generar_certificados_lote');
+    $routes->post('guardar_lote','CertificadosController::guardar_lote');
+
+});
 
 $routes->group('usuario',['filter'=>'CambioFilter'],function($routes){
     $routes->post('buscarxid','UsuariosController::buscarxid');
