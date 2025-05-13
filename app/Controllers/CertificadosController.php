@@ -33,10 +33,7 @@ class CertificadosController extends BaseController
         return $this->response->setJSON(['data' => $certificados]);
     }
 
-    public function reporteCertificado()
-    {
-        require_once(APPPATH . 'Libraries/fpdf/fpdf.php');
-    }
+    
     public function generar_certificado($id)
     {
         while (ob_get_level()) {
@@ -262,7 +259,7 @@ class CertificadosController extends BaseController
             helper('text');
 
             $certificados = $this->request->getPost('certificados');
-            $idSerie = session()->get('idseries_correlativos'); // o captúralo desde el frontend si varía
+            $sucursal = session()->get('codsucursal'); // o captúralo desde el frontend si varía
 
             // Iniciar XMLWriter
             $xml = new \XMLWriter();
@@ -272,7 +269,7 @@ class CertificadosController extends BaseController
             $xml->startElement("Certificados");
 
             // Serie (cabecera para el SP)
-            $xml->writeElement("Serie", $idSerie);
+            $xml->writeElement("Sucursal", $sucursal);
 
             // Recorrer cada certificado
             foreach ($certificados as $cert) {
@@ -288,7 +285,6 @@ class CertificadosController extends BaseController
                 $xml->writeElement("Version", $cert['version']);
                 $xml->writeElement("Motor", $cert['motor']);
                 $xml->writeElement("Chasis", $cert['chasis']);
-                $xml->writeElement("CodSer", $idSerie); // necesario para actualizar correlativo
 
                 $xml->endElement(); // Fila
             }

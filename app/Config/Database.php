@@ -26,9 +26,12 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
-        'username'     => 'root',      
-        'password'     => '',
+        //'hostname'     => 'localhost',
+        'hostname'     => 'grupoasiu.com',
+        //'username'     => 'root',   
+        'username'     => 'ollaavjq_sistemas',      
+        //'password'     => '',
+        'password'     => 'canelita24.',
         'database'     => 'ollaavjq_chinalmacen',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
@@ -41,7 +44,7 @@ class Database extends Config
         'compress'     => false,
         'strictOn'     => false,
         'failover'     => [],
-        'port'         => 3307,
+        'port'         => 3306,
         'numberNative' => false,
         'foundRows'    => false,
         'dateFormat'   => [

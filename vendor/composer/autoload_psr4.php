@@ -23,7 +23,7 @@ return array(
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
     'Greenter\\XMLSecLibs\\' => array($vendorDir . '/greenter/xmldsig/src'),
     'Greenter\\Sunat\\GRE\\' => array($vendorDir . '/greenter/gre-api/src'),
-    'Greenter\\' => array($vendorDir . '/greenter/core/src/Core', $vendorDir . '/greenter/lite/src/Greenter', $vendorDir . '/greenter/ws/src', $vendorDir . '/greenter/xml/src'),
+    'Greenter\\' => array($vendorDir . '/greenter/lite/src/Greenter', $vendorDir . '/greenter/xml/src', $vendorDir . '/greenter/ws/src', $vendorDir . '/greenter/core/src/Core'),
     'Faker\\' => array($vendorDir . '/fakerphp/faker/src/Faker'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'Config\\' => array($baseDir . '/app/Config'),

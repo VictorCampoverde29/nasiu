@@ -145,10 +145,10 @@ class ComposerStaticInit657ac079313fab046eb8c29fe1d6992b
         ),
         'Greenter\\' => 
         array (
-            0 => __DIR__ . '/..' . '/greenter/core/src/Core',
-            1 => __DIR__ . '/..' . '/greenter/lite/src/Greenter',
+            0 => __DIR__ . '/..' . '/greenter/lite/src/Greenter',
+            1 => __DIR__ . '/..' . '/greenter/xml/src',
             2 => __DIR__ . '/..' . '/greenter/ws/src',
-            3 => __DIR__ . '/..' . '/greenter/xml/src',
+            3 => __DIR__ . '/..' . '/greenter/core/src/Core',
         ),
         'Faker\\' => 
         array (

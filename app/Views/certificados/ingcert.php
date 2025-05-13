@@ -228,6 +228,17 @@ Ingreso de Certificados
     $("#btnGuardarCertificados").click(function() {
         let certificados = [];
 
+        // Verifica si la tabla tiene registros
+        let filasTabla = $("#tblcertificados tbody tr");
+        if (filasTabla.length === 0) {
+            Swal.fire({
+                icon: "warning",
+                title: "ATENCIÓN",
+                text: "No hay certificados en la tabla para guardar.",
+            });
+            return;
+        }
+
         $("#tblcertificados tbody tr").each(function() {
             let tds = $(this).find("td");
             certificados.push({
@@ -251,15 +262,45 @@ Ingreso de Certificados
                 certificados: certificados
             },
             success: function(response) {
-                console.log(response);
+                if (response.trim().includes("ERROR:")) {
+                   Swal.fire({
+                        icon: "error",
+                        title: "INGRESO DE CERTIFICADOS",
+                        text: response,
+                    });
+                    return;
+                    
+                }
+
+                
                      var mensaje= response.split("|");
-                     var imp=mensaje[0];
-                    // var noimp=filas.length-imp;
-                     $('#txtnoimp').val(mensaje[1]);
-                     $('#txtimportados').val(imp);
-                     $('#txtnoimportados').val(noimp);
-                     $('#listaelementosnoimp').html(mensaje[1]);
-                     $('#listaelementosimp').html(mensaje[2]);  
+                     var imp=mensaje[2];
+                     var noimp=mensaje[3];
+                     var chasisImportados=mensaje[0];
+                     var chasisNoImportados=mensaje[1];
+                     let listaNoImp = chasisNoImportados.split(",");
+                    let htmlNoImp = '';
+
+                    listaNoImp.forEach(function(chasis) {
+                        if (chasis.trim() !== '') {
+                            htmlNoImp += `<li>${chasis}</li>`;
+                        }
+                    });
+                    $('#listaelementosnoimp').html(htmlNoImp);
+
+                    // Crear la lista de chasis importados
+                    let listaImp = chasisImportados.split(",");
+                    let htmlImp = '';
+                    listaImp.forEach(function(chasis) {
+                        if (chasis.trim() !== '') {
+                            htmlImp += `<li>${chasis}</li>`;
+                        }
+                    });
+                    $('#listaelementosimp').html(htmlImp);
+
+                      $('#txtnoimp').val(noimp);
+                      $('#txtimportados').val(imp);
+                      $('#txtnoimportados').val(noimp);
                      $('#modalresultados').modal('show');
             },
             error: function() {

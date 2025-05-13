@@ -21,6 +21,9 @@ $routes->group('dashboard',['filter'=>'AuthFilter'],function($routes){
     $routes->get('unidades','UnidadesController::index');
     $routes->get('imp_cert','CertificadosController::imp_cert');
     $routes->get('ing_cert','CertificadosController::ing_cert');
+    $routes->get('mant_transportista','TransportistaController::index');
+    $routes->get('nguiaelect','TransportistaController::index');
+  
 });
 
 
@@ -65,6 +68,13 @@ $routes->group('unidades',['filter'=>'CambioFilter'],function($routes){
     $routes->post('update','UnidadesController::update');  
 });
 
+$routes->group('transportista',['filter'=>'CambioFilter'],function($routes){
+    $routes->get('datatable','TransportistaController::getAll');
+    $routes->post('insertar','TransportistaController::insertar');
+    $routes->post('buscarxid','TransportistaController::getById');
+    $routes->post('update','TransportistaController::update');  
+});
+
 $routes->group('documentacion',['filter'=>'CambioFilter'],function($routes){
     $routes->post('insertar','DocumentacionController::insertar');
     $routes->post('datatable','DocumentacionController::get_all_x_unidades');  
@@ -76,6 +86,7 @@ $routes->group('documentacion',['filter'=>'CambioFilter'],function($routes){
 //API CONSULTAS
 $routes->group('api',['filter'=>'CambioFilter'],function($routes){
     $routes->post('unidades','ApiController::ConsultarPLaca');
+    $routes->post('ruc','ApiController::buscarRUC');
 });
 
 
